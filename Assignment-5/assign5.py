@@ -75,7 +75,7 @@ show()
 fig2=figure(figsize=(12,5)) # open a new figure
 ax=p3.Axes3D(fig2) # Axes3D is the means to do a surface plot
 title('The 3-D surface plot of the potential')
-surf = ax.plot_surface(-Y, -X, phi, rstride=1, cstride=1, cmap=cm.jet)
+surf = ax.plot_surface(-Y, -X, phi, rstride=1, cstride=1, cmap="RdBu_r")
 fig2.colorbar(surf, orientation='vertical')
 show()
 
@@ -97,9 +97,6 @@ def fitForError(errors, x):
     A[:, 1] = x
     return A, lstsq(A, log(errors), rcond=None)[0]
 
-#function to compute error using log(A) and B values
-def computeErrorFit(M, c):
-    return exp(M.dot(c))
 
 M1, c1 = fitForError(errors, range(Niter))  # fit1 - taking all iterations
 M2, c2 = fitForError(errors[500:], range(Niter)[500:])  # fit2 - taking iterations > 500
@@ -139,6 +136,7 @@ Jy[1:-1, 1:-1] = 0.5*(phi[2:, 1:-1] - phi[0:-2, 1:-1])
 f5 = figure(figsize=(12,8))
 ax = f5.add_subplot(111)
 
+#scatter plot of the current and volt
 ax.scatter(x[ii[0]], y[ii[1]], color='r', label="V = 1 region")
 
 ax.quiver(-Y, -X, Jx, Jy)
